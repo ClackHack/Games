@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\Clay\Clay\Python\Games\GenMaze.py", line 316, in <module>
+    while MazeGame(Maze.generate(width, height)).play(): pass
+  File "C:\Users\Clay\Clay\Python\Games\GenMaze.py", line 280, in play
+    console.display(str(self.maze))
+NameError: name 'console' is not defined
