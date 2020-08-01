@@ -1,2 +1,2 @@
 # Games
- some games ive made
+ A collection of games, finished or not
