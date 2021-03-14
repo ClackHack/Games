@@ -5,26 +5,32 @@ ATTACK=0.2
 NEW=0.4
 LOWER=1
 class Cell:
-    def __init__(self,color,attack,defense,king=False):
+    def __init__(self,color,attack,defense,attackprob,king=False):
         self.color=color
         self.attack=attack
         self.defense=defense
+        self.attackprob=attackprob
+        self.original=self.defense
         self.king=king
     @staticmethod
     def generate():
         color = "#"+"%06x" % random.randint(0x333333, 0xDDDDDD)
         attack = random.randint(10,65)
         defense = random.randint(20,120)
-        return Cell(color,attack,defense,king=True)
+        prob=random.uniform(0,0.5)
+        return Cell(color,attack,defense,prob,king=True)
     def attackother(self,other,l):
         if other.color==self.color:
             return
         other.defense=other.defense-self.attack
         if other.defense < 1:
+            self.defense=self.original
             other.color=self.color
             other.attack=max(5,self.attack-l)
             other.defense=max(10,self.defense-l)
             other.king=False
+            other.attackprob=self.attackprob
+            
 
 
 class App(tk.Tk):
@@ -79,7 +85,7 @@ class App(tk.Tk):
             for j,jj in enumerate(ii):
                 #self.fill(i,j,jj.color)
                 
-                if random.uniform(0,1)<=ATTACK:
+                if random.uniform(0,1)<=jj.attackprob:
                     n = self.neighbors(i,j)
                     #print(n)
                     jj.attackother(random.choice(n),LOWER)
